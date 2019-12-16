@@ -26,6 +26,7 @@ public class SceneManager : MonoBehaviour
     TextMesh treeText;
     GameObject hydrationLabel;
     GameObject lightLabel;
+    GameObject winText;
 
     //Alternate Textures for GameObjects
     //background
@@ -52,6 +53,7 @@ public class SceneManager : MonoBehaviour
     int hydration = 0;
     int lightLevel = 0;
     int lvl = 0;
+    bool win = false;
 
     // Initialization
     void Start()
@@ -68,6 +70,7 @@ public class SceneManager : MonoBehaviour
         wateringCan = GameObject.Find("WateringCan");
         hydrationLabel = GameObject.Find("Hydration");
         lightLabel = GameObject.Find("LightLevel");
+        winText = GameObject.Find("WinScreen");
         
     }
 
@@ -102,8 +105,10 @@ public class SceneManager : MonoBehaviour
             hydrationLabel.GetComponent<TextMesh>().color = Color.green;
         }
 
+        
+        //tree growth steps
 
-        //update loop stuff
+        //lvl 2
         if (lvl == 1 && lightLevel > 600 && lightLevel < 800 && hydration > 600 && hydration < 800) {
             prevTime = millis;//set timer to millis
             factTime = millis;//set timer to millis
@@ -116,6 +121,7 @@ public class SceneManager : MonoBehaviour
 
         }
 
+        //lvl 3
         if (lvl == 2 && lightLevel > 1200 && lightLevel < 1500 && hydration > 1200 && hydration < 1500)
         {
             prevTime = millis;//set timer to millis
@@ -129,6 +135,7 @@ public class SceneManager : MonoBehaviour
 
         }
 
+        //lvl 4
         if (lvl == 3 && lightLevel > 1800 && lightLevel < 2000 && hydration > 1800 && hydration < 2000)
         {
             prevTime = millis;//set timer to millis
@@ -140,6 +147,13 @@ public class SceneManager : MonoBehaviour
             poof.GetComponent<AudioSource>().Play();
             foreground.GetComponent<SpriteRenderer>().sprite = Sprite.Create(stage4, new Rect(0, 0, stage4.width, stage4.height), new Vector2(0.5f, 0.5f));
 
+        }
+
+        //trigger a game win screen
+        if (lvl == 4 && lightLevel > 2000) {
+            win = true;
+            winText.GetComponent<TextMesh>().text = "You Have Successfully Grown A Tree!";
+            winText.GetComponent<TextMesh>().text = "You Have Successfully Grown A Tree!";
         }
 
         //timer for the poof animation 
@@ -237,5 +251,17 @@ public class SceneManager : MonoBehaviour
         }
         else
             Debug.Log("Message arrived: " + message);
+    }
+
+    //UI Stuff for Buttons 
+    private void OnGUI()
+    {
+        if (win == true) {
+            if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2, 250, 60), "Click on this to plant your new tree!"))
+            {
+                Application.OpenURL("https://teamtrees.org/");
+            }
+        }
+       
     }
 }
