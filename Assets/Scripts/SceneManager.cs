@@ -150,7 +150,7 @@ public class SceneManager : MonoBehaviour
         }
 
         //trigger a game win screen
-        if (lvl == 4 && lightLevel > 2000) {
+        if (lvl == 4 && lightLevel > 1850 && hydration > 1850) {
             win = true;
             winText.GetComponent<TextMesh>().text = "You Have Successfully Grown A Tree!";
             winText.GetComponent<TextMesh>().text = "You Have Successfully Grown A Tree!";
@@ -162,7 +162,7 @@ public class SceneManager : MonoBehaviour
             poof.GetComponent<SpriteRenderer>().enabled = false;
         }
         //timer for tree facts
-        if (millis >= factTime + 200)
+        if (millis >= factTime + 400)
         {
             fact.GetComponent<SpriteRenderer>().enabled = false;
             treeText.text = "";
@@ -257,7 +257,7 @@ public class SceneManager : MonoBehaviour
     private void OnGUI()
     {
         if (win == true) {
-            if (GUI.Button(new Rect(Screen.width / 2 - 50, Screen.height / 2, 250, 60), "Click on this to plant your new tree!"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 125, Screen.height / 2 + 50, 250, 60), "Click on this to plant your new tree!"))
             {
                 Application.OpenURL("https://teamtrees.org/");
             }
